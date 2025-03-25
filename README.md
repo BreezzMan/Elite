@@ -1,0 +1,2 @@
+# Elite
+ Elite Dangerous minimum
