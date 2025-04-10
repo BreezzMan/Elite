@@ -7,6 +7,7 @@ public class shipController : MonoBehaviour
     [SerializeField] private float _force = 1000f;
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private float _maxSpeed = 100f;
+    [SerializeField] private float _HP = 100f;
 
     private Rigidbody _rb;
 
@@ -64,4 +65,14 @@ public class shipController : MonoBehaviour
             _rb.AddForce(transform.forward * _force * 0.3f * _verticalInput);
         }
     }
+
+    public float GetHP()
+    {
+        return _HP;
+    }
+    public void GetDamage(float damage)
+    {
+        _HP -= damage;
+    }
 }
+
