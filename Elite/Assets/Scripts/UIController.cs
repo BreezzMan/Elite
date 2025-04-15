@@ -9,12 +9,15 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _station;
     [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _diePanel;
 
     private bool _isPause;
+    private bool _isDie;
 
     private void Start()
     {
         _isPause = false;
+        _isDie = false;
 
         _hpBar.maxValue = _player.GetComponent<shipController>().GetHP();
         _hpBar.value = _hpBar.maxValue;
@@ -26,9 +29,9 @@ public class UIController : MonoBehaviour
     private void Update()
     {
         _hpBar.value = _player.GetComponent<shipController>().GetHP();
-        _hpBar.value = _hpBar.maxValue;
+        _hpStationBar.value = _station.GetComponent<StationController>().GetHP();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !_isDie )
         {
             ChangePause();
         }
@@ -44,8 +47,23 @@ public class UIController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        Cursor.visible = _isPause;
+        Cursor.visible = _isPause || _isDie;
         _pausePanel.SetActive(_isPause);
+
+        if (_isDie )
+        {
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            _isPause = false;
+        }
+
+        _diePanel.SetActive(_isDie);
+
+        if (_hpBar.value <= 0 || _hpStationBar.value <= 0)
+        {
+            _isDie = true;
+        }
+
     }
 
     public void ChangePause()

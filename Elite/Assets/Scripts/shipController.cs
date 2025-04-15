@@ -73,6 +73,7 @@ public class shipController : MonoBehaviour
     public void GetDamage(float damage)
     {
         _HP -= damage;
+        Debug.Log(_HP);
     }
 }
 
